@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace WebServCo\Emitter\Service;
 
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use UnderflowException;
 use WebServCo\Emitter\Contract\EmitterInterface;
@@ -23,6 +24,7 @@ final class StackEmitter implements EmitterInterface
     {
     }
 
+    #[Override]
     public function emit(ResponseInterface $response): bool
     {
         // Call all emitters in stack until one of them returns true.

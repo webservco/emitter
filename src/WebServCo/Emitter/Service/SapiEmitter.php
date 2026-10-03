@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebServCo\Emitter\Service;
 
 use OverflowException;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use WebServCo\Emitter\Contract\EmitterInterface;
 
@@ -21,6 +22,7 @@ use const PHP_SAPI;
  */
 final class SapiEmitter implements EmitterInterface
 {
+    #[Override]
     public function emit(ResponseInterface $response): bool
     {
         // Check if we are actually able to emit the response.
