@@ -20,7 +20,7 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "description" : "A PHP component/library.",
+    "description" : "A PHP component/library. Sends a PSR-7 response to the client, with its status line, headers and body.",
     "homepage" : "https://webserv.co",
     "keywords" : [
         "component",
