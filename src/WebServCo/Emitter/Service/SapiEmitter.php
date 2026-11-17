@@ -11,7 +11,6 @@ use WebServCo\Emitter\Contract\EmitterInterface;
 
 use function header;
 use function headers_sent;
-use function implode;
 use function in_array;
 use function sprintf;
 
@@ -59,12 +58,19 @@ final class SapiEmitter implements EmitterInterface
 
     private function sendHeaders(ResponseInterface $response): void
     {
-        foreach ($response->getHeaders() as $headerName => $headerData) {
-            header(
-                sprintf('%s: %s', $headerName, implode(', ', $headerData)),
-                // Replace a previous similar header.
-                false,
-            );
+        foreach ($response->getHeaders() as $headerName => $headerValues) {
+            /**
+             * Send each value as a separate header line, never joined by comma.
+             * Some headers (notably `Set-Cookie`) can not be combined into a single line (RFC 9110 5.3, RFC 6265 3);
+             * for all other headers, separate lines are equivalent to the combined form.
+             */
+            foreach ($headerValues as $headerValue) {
+                header(
+                    sprintf('%s: %s', $headerName, $headerValue),
+                    // Do not replace a previous header with the same name.
+                    false,
+                );
+            }
         }
     }
 
